@@ -10,7 +10,7 @@
 
     <header>
         <h1>Play</h1>
-        <p>Coming soon</p>
+        <p>Treasure Hunt</p>
     </header>
 
     <nav>
@@ -22,10 +22,22 @@
 
     <main>
         <section>
+            <h2>Player</h2>
+            <p id="welcome"></p>
+            <form id="nameForm" onsubmit="saveName(); return false;">
+                <input type="text" id="playerName" placeholder="Your name" maxlength="30">
+                <button type="submit" class="button">Save</button>
+            </form>
+            <button type="button" id="changeName" class="button" onclick="changeName()">Change name</button>
+        </section>
+
+        <section>
             <h2>Coming Soon</h2>
-            <p>The Treasure Hunt app is under construction. Check back soon!</p>
+            <p>The Treasure Hunt game is under construction. Check back soon!</p>
         </section>
     </main>
 
+    <script src="js/cookies.js"></script>
+    <script src="js/player.js"></script>
 </body>
 </html>
