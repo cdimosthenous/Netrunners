@@ -126,6 +126,7 @@ section h2 {
     width: 36px;
     height: 36px;
     object-fit: contain;
+    margin: 0 6px;
 }
 
 footer a {
