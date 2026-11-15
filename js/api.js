@@ -25,7 +25,7 @@ function getChallenges(){
 getChallenges();
 
 function startChallenge(currentHuntUuid){
-    fetch(`https://codecyprus.org/th/api/start?player=Netrunners&app=TreasureHuntApp-app&treasure-hunt-id={currentHuntUuid}'`)
+    fetch(`https://codecyprus.org/th/api/start?player=Netrunners&app=TreasureHuntApp-app&treasure-hunt-id=${currentHuntUuid}'`)
     .then(response => response.json())
     .then(data => {
         console.log(data);
