@@ -31,6 +31,7 @@ function startChallenge(currentHuntUuid){
         console.log(data);
 
         if(data.status==="OK") {
+            
             const sessionID = data.session;
             console.log("Session ID: " + sessionID);
 
