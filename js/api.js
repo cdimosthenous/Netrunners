@@ -52,13 +52,18 @@ function getChallenges() {
 
 getChallenges();
 
-function startChallenge(currentHuntUuid) {
+// playerName is optional: it is only passed when retrying with a different name.
+function startChallenge(currentHuntUuid, playerName) {
     if (!currentHuntUuid) {
         console.log("No treasure hunt selected");
         return;
     }
 
-    fetch(`${API_BASE}/start?player=${encodeURIComponent(getPlayerName())}&app=${encodeURIComponent(APP_NAME)}&treasure-hunt-id=${encodeURIComponent(currentHuntUuid)}`)
+    if (!playerName) {
+        playerName = getPlayerName();
+    }
+
+    fetch(`${API_BASE}/start?player=${encodeURIComponent(playerName)}&app=${encodeURIComponent(APP_NAME)}&treasure-hunt-id=${encodeURIComponent(currentHuntUuid)}`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -74,8 +79,12 @@ function startChallenge(currentHuntUuid) {
                 document.getElementById("huntsSection").style.display = "none";
                 document.getElementById("gameSection").style.display = "block";
                 getQuestion(sessionID);
+            } else if (String(data.errorMessages).includes("already in use")) {
+                // Name was used before: retry with a random number added to it.
+                let uniqueName = getPlayerName() + Math.floor(Math.random() * 10000);
+                startChallenge(currentHuntUuid, uniqueName);
             } else {
-                showMessage("Could not start: " + data.errorMessages);
+                alert("Could not start: " + data.errorMessages);
             }
         })
         .catch(error => console.log("Error starting challenge: " + error));
