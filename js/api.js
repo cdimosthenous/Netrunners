@@ -35,14 +35,19 @@ function getChallenges() {
                 let currentHunt = treasureHuntsArray[i];
 
                 let listItem = document.createElement("li");
+                let huntName = document.createElement("span");
+                huntName.textContent = currentHunt.name;
+
                 let link = document.createElement("a");
                 link.href = "#";
-                link.textContent = currentHunt.name;
+                link.className = "button";
+                link.textContent = "Play now";
                 link.addEventListener("click", function (event) {
                     event.preventDefault();
                     startChallenge(currentHunt.uuid);
                 });
 
+                listItem.appendChild(huntName);
                 listItem.appendChild(link);
                 challengesList.appendChild(listItem);
             }
