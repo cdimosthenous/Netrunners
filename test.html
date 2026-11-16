@@ -9,24 +9,51 @@
 </head>
 <body>
 
-    <header>
-        <h1>Testing</h1>
-        <p>Coming soon</p>
-    </header>
+<header>
+    <h1>Testing</h1>
+    <p>Treasure Hunt Test</p>
+</header>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="app.html">Play</a>
-        <a href="test.html">Testing</a>
-        <a href="notes.html">Notes</a>
-    </nav>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="app.html">Play</a>
+    <a href="test.html">Testing</a>
+    <a href="notes.html">Notes</a>
+</nav>
 
-    <main>
-        <section>
-            <h2>Coming Soon</h2>
-            <p>Our testing notes will be added here soon.</p>
-        </section>
-    </main>
+<main>
+    <section>
+        <p id="welcome to the test"></p>
+        <form id="nameForm" onsubmit="saveName(); return false;">
+            <input type="text" id="playerName" placeholder="Your name" maxlength="30">
+            <button type="submit" class="button">Save</button>
+        </form>
+    </section>
 
+    <section id="huntsSection">
+        <h2>Choose a Treasure Hunt</h2>
+        <ul id="challengesList"></ul>
+    </section>
+
+    <section id="gameSection" style="display: none;">
+        <h2>Treasure Hunt</h2>
+        <p id="score"></p>
+        <p id="questionText"></p>
+        <div id="answerArea"></div>
+        <button type="button" id="submitButton" class="button" onclick="submitAnswer(getSessionId())">Submit</button>
+        <p id="message"></p>
+    </section>
+
+    <section id="leaderboardSection" style="display: none;">
+        <h2>Leaderboard</h2>
+        <ol id="leaderboardList"></ol>
+    </section>
+
+
+</main>
+
+    <script src="js/cookies.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/TestingApi.js"></script>
 </body>
 </html>
