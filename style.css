@@ -24,6 +24,31 @@ header {
     margin-bottom: 12px;
 }
 
+/* Inner pages: logo in one corner, title text in the other */
+.page-header {
+    display: flex;
+    flex-direction: row-reverse; /* logo (first in HTML) goes to the right */
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 16px 24px;
+}
+
+.page-header .logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 0;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.page-header p {
+    margin: 0;
+}
+
 header h1 {
     margin: 0 0 8px;
     font-size: 2.5rem;

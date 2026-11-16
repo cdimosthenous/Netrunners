@@ -63,7 +63,7 @@ function startChallenge(currentHuntUuid) {
         return;
     }
 
-    fetch(`${API_BASE}/start?player=${encodeURIComponent(getPlayerName())}&app=${encodeURIComponent(APP_NAME)}&treasure-hunt-id=${encodeURIComponent(currentHuntUuid)}`)
+    fetch(`${API_BASE}/start?player=${getPlayerName()}&app=${APP_NAME}&treasure-hunt-id=${currentHuntUuid}`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -88,7 +88,7 @@ function startChallenge(currentHuntUuid) {
 
 // Fetches the current question, builds the answer inputs and the skip button.
 function getQuestion(sessionID) {
-    fetch(`${API_BASE}/question?session=${encodeURIComponent(sessionID)}`)
+    fetch(`${API_BASE}/question?session=${sessionID}`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -165,7 +165,7 @@ function challengeQuestions(sessionID) {
 }
 
 function questionSkip(sessionID) {
-    fetch(`${API_BASE}/skip?session=${encodeURIComponent(sessionID)}`)
+    fetch(`${API_BASE}/skip?session=${sessionID}`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -200,7 +200,7 @@ function submitAnswer(sessionID) {
         return;
     }
 
-    fetch(`${API_BASE}/answer?session=${encodeURIComponent(sessionID)}&answer=${encodeURIComponent(answer)}`)
+    fetch(`${API_BASE}/answer?session=${sessionID}&answer=${answer}`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -227,7 +227,7 @@ function updateLocation(sessionID) {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
 
-            fetch(`${API_BASE}/location?session=${encodeURIComponent(sessionID)}&latitude=${latitude}&longitude=${longitude}`)
+            fetch(`${API_BASE}/location?session=${sessionID}&latitude=${latitude}&longitude=${longitude}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -247,7 +247,7 @@ function updateLocation(sessionID) {
 }
 
 function getScore(sessionID) {
-    fetch(`${API_BASE}/score?session=${encodeURIComponent(sessionID)}`)
+    fetch(`${API_BASE}/score?session=${sessionID}`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -262,7 +262,7 @@ function getScore(sessionID) {
 }
 
 function getLeaderboard(sessionID) {
-    fetch(`${API_BASE}/leaderboard?session=${encodeURIComponent(sessionID)}&sorted&limit=10`)
+    fetch(`${API_BASE}/leaderboard?session=${sessionID}&sorted&limit=10`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
