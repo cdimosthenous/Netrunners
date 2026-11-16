@@ -99,3 +99,173 @@ function questionSkip(sessionID){
     })
         .catch(error => console.log("Error skipping question:" + error));
 }
+let questionType = "";
+function getQuestion(sessionID)
+{
+    fetch(`https://codecyprus.org/th/api/question?session=${sessionID}`)
+        .then(response => response.json())
+        .then(data => {
+
+            console.log(data);
+
+            if(data.status === "OK")
+            {
+                console.log("Question: " + data.question.questionText);
+                console.log("Type: " + data.question.questionType);
+                questionType = data.question.questionType;
+                let answerArea = document.getElementById("answerArea");
+                if(questionType === "BOOLEAN")
+                {
+                    answerArea.innerHTML =
+                        `
+                    <input type="radio" name="answer" value="True"> True <br>
+                    <input type="radio" name="answer" value="False"> False
+                    `;
+                }
+                else if(questionType === "INTEGER")
+                {
+                    answerArea.innerHTML = '<input type="number" id="answer">';
+                }
+                else if(questionType === "NUMERIC")
+                {
+                    answerArea.innerHTML = '<input type="number" step="any" id="answer">';
+                }
+                else if(questionType === "MCQ")
+                {
+                    answerArea.innerHTML =
+                        `
+                    <input type="radio" name="answer" value="A"> A <br>
+                    <input type="radio" name="answer" value="B"> B <br>
+                    <input type="radio" name="answer" value="C"> C <br>
+                    <input type="radio" name="answer" value="D"> D
+                    `;
+                }
+                else
+                {
+                    answerArea.innerHTML = '<input type="text" id="answer">';
+                }
+            }
+
+        })
+        .catch(error => console.log("Error getting question: " + error));
+}
+function submitAnswer(sessionID)
+{
+    let answer = "";
+
+    if(questionType === "MCQ")
+    {
+        let answers = document.getElementsByName("answer");
+        for(let i = 0; i < answers.length; i++)
+        {
+            if(answers[i].checked)
+            {
+                answer = answers[i].value;
+            }
+        }
+    }
+    else
+    {
+        answer = document.getElementById("answer").value;
+    }
+
+    if(answer === "")
+    {
+        console.log("Please enter an answer");
+        return;
+    }
+
+    fetch(`https://codecyprus.org/th/api/answer?session=${sessionID}&answer=${answer}`)
+        .then(response => response.json())
+        .then(data =>
+        {
+
+            console.log(data);
+
+            if(data.status === "OK")
+            {
+                console.log("Answer submitted");
+                console.log("Message: " + data.message);
+                if(data.completed)
+                {
+                    console.log("Treasure Hunt completed");
+                }
+                else
+                {
+                    getQuestion(sessionID);
+                }
+            }
+            else
+            {
+                console.log("Wrong answer");
+            }
+        })
+        .catch(error => console.log("Error submitting answer: " + error));
+}
+function updateLocation(sessionID)
+{
+    navigator.geolocation.getCurrentPosition(
+        function(position)
+        {
+            let latitude = position.coords.latitude;
+
+            let longitude = position.coords.longitude;
+
+            fetch(`https://codecyprus.org/th/api/location?session=${sessionID}&latitude=${latitude}&longitude=${longitude}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if(data.status === "OK")
+                    {
+                        console.log("Location updated");
+                        console.log("Message: " + data.message);
+                    }
+                    else
+                    {
+                        console.log("Location was not updated");
+                    }
+
+                })
+                .catch(error => console.log("Error updating location: " + error));
+        },
+
+        function(error)
+        {
+            console.log("Could not get location");
+        }
+
+    );
+}
+function getScore(sessionID)
+{
+    fetch(`https://codecyprus.org/th/api/score?session=${sessionID}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if(data.status === "OK")
+            {
+                console.log("Player: " + data.player);
+                console.log("Score: " + data.score);
+            }
+
+        })
+        .catch(error => console.log("Error getting score: " + error));
+}
+function getLeaderboard(sessionID)
+{
+    fetch(`https://codecyprus.org/th/api/leaderboard?session=${sessionID}&sorted&limit=10`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if(data.status === "OK")
+            {
+                for(let i = 0; i < data.leaderboard.length; i++)
+                {
+                    console.log(data.leaderboard[i]);
+                    console.log(data.leaderboard[i].player + " : " + data.leaderboard[i].score);
+                }
+            }
+
+        })
+        .catch(error => console.log("Error getting leaderboard: " + error));
+}
