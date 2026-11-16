@@ -32,13 +32,23 @@
             <button type="button" id="changeName" class="button" onclick="changeName()">Change name</button>
         </section>
 
-        <section>
-            <h2>Coming Soon</h2>
-            <p>The Treasure Hunt game is under construction. Check back soon!</p>
+        <section id="huntsSection">
+            <h2>Choose a Treasure Hunt</h2>
+            <ul id="challengesList"></ul>
+        </section>
+
+        <section id="gameSection" style="display: none;">
+            <h2>Treasure Hunt</h2>
+            <p id="score"></p>
+            <p id="questionText"></p>
+            <div id="answerArea"></div>
+            <button type="button" id="submitButton" class="button" onclick="submitAnswer(getSessionId())">Submit</button>
+            <p id="message"></p>
         </section>
     </main>
 
     <script src="js/cookies.js"></script>
     <script src="js/player.js"></script>
+    <script src="js/api.js"></script>
 </body>
 </html>
