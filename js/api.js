@@ -100,6 +100,7 @@ function getQuestion(sessionID) {
                 document.getElementById("questionText").textContent = "";
                 document.getElementById("answerArea").innerHTML = "";
                 document.getElementById("submitButton").style.display = "none";
+                getLeaderboard(sessionID);
                 return;
             }
 
@@ -260,10 +261,15 @@ function getLeaderboard(sessionID) {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            if (data.status === "OK") {
+            let leaderboardList = document.getElementById("leaderboardList");
+            if (data.status === "OK" && leaderboardList) {
+                leaderboardList.innerHTML = "";
                 for (let i = 0; i < data.leaderboard.length; i++) {
-                    console.log(data.leaderboard[i].player + " : " + data.leaderboard[i].score);
+                    let listItem = document.createElement("li");
+                    listItem.textContent = data.leaderboard[i].player + " : " + data.leaderboard[i].score;
+                    leaderboardList.appendChild(listItem);
                 }
+                document.getElementById("leaderboardSection").style.display = "block";
             }
         })
         .catch(error => console.log("Error getting leaderboard: " + error));
