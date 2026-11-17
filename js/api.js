@@ -3,7 +3,40 @@ const APP_NAME = "Netrunners-TreasureHuntApp";
 
 let questionType = "";
 
-// Player name comes from the cookie saved by player.js (falls back to "Netrunners").
+let locationInterval = null;
+
+// Starts updating the player's location every 10 seconds
+function startLocationUpdates(sessionID)
+{
+
+    if (!navigator.geolocation)
+    {
+        console.log("Geolocation is not supported.");
+        return;
+    }
+
+    // Prevent multiple timers running simultaneously
+    clearInterval(locationInterval);
+
+    // Update location immediately.
+    updateLocation(sessionID);
+
+    // Update location every 10 seconds
+    locationInterval = setInterval(function ()
+    {
+        updateLocation(sessionID);
+    }, 10000);
+}
+
+// Stops updating the player's location.
+function stopLocationUpdates()
+{
+    clearInterval(locationInterval);
+    locationInterval = null;
+}
+
+
+// Player name comes from the cookie saved by player.js (falls back to "Netrunners")
 function getPlayerName() {
     let name = (typeof getCookie === "function") ? getCookie("playerName") : "";
     return name || "Netrunners";
@@ -78,6 +111,8 @@ function startChallenge(currentHuntUuid) {
 
                 document.getElementById("huntsSection").style.display = "none";
                 document.getElementById("gameSection").style.display = "block";
+
+                startLocationUpdates(sessionID);
                 getQuestion(sessionID);
             } else {
                 alert("Could not start: " + data.errorMessages);
@@ -101,6 +136,7 @@ function getQuestion(sessionID) {
             getScore(sessionID);
 
             if (data.completed) {
+                stopLocationUpdates();
                 showMessage("Treasure Hunt completed!");
                 document.getElementById("questionText").textContent = "";
                 document.getElementById("answerArea").innerHTML = "";
@@ -221,7 +257,13 @@ function submitAnswer(sessionID) {
         .catch(error => console.log("Error submitting answer: " + error));
 }
 
-function updateLocation(sessionID) {
+function updateLocation(sessionID)
+{
+    if (!navigator.geolocation)
+    {
+        console.log("Geolocation is not supported.");
+        return;
+    }
     navigator.geolocation.getCurrentPosition(
         function (position) {
             let latitude = position.coords.latitude;
@@ -240,8 +282,9 @@ function updateLocation(sessionID) {
                 })
                 .catch(error => console.log("Error updating location: " + error));
         },
-        function (error) {
-            console.log("Could not get location");
+        function (error)
+        {
+            console.log("Could not get location: " + error.message);
         }
     );
 }
