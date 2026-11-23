@@ -195,17 +195,3 @@ footer {
     padding: 16px;
     font-size: 0.9rem;
 }
-
-#hintButton {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-#hint {
-    background-color: yellow;
-    padding: 10px;
-    box-shadow: 7px 7px 10px black;
-    border-radius: 5px 15px 5px 15px;
-    opacity: 0.5;
-    display: inline-block;
-}
