@@ -161,8 +161,8 @@ function getQuestion(sessionID) {
             if (questionType === "BOOLEAN") {
                 answerArea.innerHTML =
                     `
-                    <input type="radio" name="answer" value="true"> True <br>
-                    <input type="radio" name="answer" value="false"> False
+                    <label class="option"><input type="radio" name="answer" value="true"> True</label>
+                    <label class="option"><input type="radio" name="answer" value="false"> False</label>
                     `;
             } else if (questionType === "INTEGER") {
                 answerArea.innerHTML = '<input type="number" id="answer">';
@@ -171,13 +171,13 @@ function getQuestion(sessionID) {
             } else if (questionType === "MCQ") {
                 answerArea.innerHTML =
                     `
-                    <input type="radio" name="answer" value="A"> A <br>
-                    <input type="radio" name="answer" value="B"> B <br>
-                    <input type="radio" name="answer" value="C"> C <br>
-                    <input type="radio" name="answer" value="D"> D
+                    <label class="option"><input type="radio" name="answer" value="A"> A</label>
+                    <label class="option"><input type="radio" name="answer" value="B"> B</label>
+                    <label class="option"><input type="radio" name="answer" value="C"> C</label>
+                    <label class="option"><input type="radio" name="answer" value="D"> D</label>
                     `;
             } else {
-                answerArea.innerHTML = '<input type="text" id="answer">';
+                answerArea.innerHTML = '<input type="text" id="answer" placeholder="Type your answer">';
             }
 
             // Skip is only offered when the question allows it, and only runs on click.
@@ -188,7 +188,7 @@ function getQuestion(sessionID) {
                 skipButton.addEventListener("click", function () {
                     questionSkip(sessionID);
                 });
-                answerArea.appendChild(document.createElement("br"));
+                skipButton.className = "skip-button";
                 answerArea.appendChild(skipButton);
             }
         })

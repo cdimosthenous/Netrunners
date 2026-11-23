@@ -173,6 +173,72 @@ section h2 {
     white-space: nowrap;
 }
 
+/* Game: score, question, answers */
+#score {
+    font-weight: bold;
+    color: #0a2a43;
+    background-color: #fff6d6;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+}
+
+#questionText {
+    font-size: 1.2rem;
+    background-color: #eef3f7;
+    border-left: 6px solid #f5b301;
+    border-radius: 6px;
+    padding: 12px 16px;
+}
+
+#answerArea {
+    margin: 12px 0;
+}
+
+#answerArea input[type="number"],
+#answerArea input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 11px;
+    font-size: 1rem;
+    border: 1px solid #999;
+    border-radius: 6px;
+}
+
+.option {
+    display: block;
+    background-color: #eef3f7;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #e1eaf1;
+}
+
+.skip-button {
+    display: block;
+    margin-top: 12px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    border: 1px solid #999;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+#message {
+    font-weight: bold;
+    color: #123d5e;
+    min-height: 1.6em;
+}
+
+#leaderboardList li {
+    padding: 4px 0;
+}
+
 #linksLogos {
     margin-top: 8px;
 }
